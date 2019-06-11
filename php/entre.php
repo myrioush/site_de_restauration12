@@ -1,16 +1,6 @@
 <?php
    include"menu.php";
    require"../database.php";
-
-   if (isset($_GET['id']) && !empty($_GET['id'])) 
-    {
-    	$db = Database::connect();
-    	$id=(int) $_GET['id'];
-    	$statement = $db->prepare("SELECT items.id, items.name, items.description, items.price, items.image, categories.name AS category FROM items LEFT JOIN categories ON items.category = categories.id WHERE items.id =1");
-        $statement->execute(array($id));
-        
-       
-     }
      function checkInput($data) 
     {
       $data = trim($data);
@@ -35,37 +25,60 @@
 </head>
 <body>
 
-	<table class="row" style="margin-left:50px;">
-		<thead class="card"style="width: 18rem;">
-                      <?php
-                        while($item = $statement->fetch())
-                        {
-                            echo '<tr>';
-                            echo '<td>'.'<img style="width:18rem;" src=../image/'.$item['image'].'></td>';
-                            echo '</tr>';
-                            echo '<tr>';
-                            echo '<td>'.$item['name'].'</td>';
-                            echo '</tr>';
-                            echo '<tr>';
-                            echo '<td>'.$item['description'].'</td>';
-                            echo '</tr>';
-                            echo '<tr>';
-                            echo '<th>'.number_format((float)$item['price'], 2, '.', ''). ' cfa'.'</th>';
-                            echo '</tr>';
-                            echo '<tr>';
-                            echo '<td>'.'<button class="btn btn-primary">gosososo</button>'.'</td>';
-                            echo '</tr>';
-                           
-                        } 
-                        Database::disconnect();
-                      ?>
-        </thead>
+	<?php
+          require "../database.php";
+          echo '<nav><ul class="nav nav-tabs">';
 
+          $db =Database::connect();
+          $statement = $db->query("SELECT * FROM categories");
+          $categories=$statement->fetchAll();
+              foreach ($categories as $category)
+              {
+                if ($category['id']=='1')
+                {
+                  echo '<li class="active"><a class="nav-link" href="#'.$category['id'].'"data-toogle="tab">'.$category['name'].'</a></li>';
+                }
+                else
+                {
+                  echo '<li class="nav-item"><a class="nav-link" href="#'.$category['id'].'"data-toogle="tab">'.$category['name'].'</a></li>';
+                }
+              }
+             echo "</ul></nav>";
+             
+             
+             foreach ($categories as $category)
+             {
+                   if ($category['id']=='1')
+                   {
+                       echo '<div class="active" id="'.$category['id'].'">';
+                   }
+                   else
+                   {
+                       echo '<div class="" id="'.$category['id'].'">';
+                   }
+                 
+                   $statement = $db->prepare('SELECT*FROM items WHERE items.category=1');
+                   $statement->execute(array($category['id']));
+                    while($item = $statement->fetch())
+                    {
+                       echo '  <div class="card" style="width: 18rem;">
+                                  <img style="width:18rem;" src="../image/'.$item['image'].'">
+                                  <div class="card" style="width: 18rem;">
+                                   <h4>'.$item['name'].'</h4>
+                                    <p>'.$item['description'].'</p>
+                                    <div>'.number_format((float)$item['price'], 2, '.', ''). ' cfa'.'</div>
+                                     <a href="#" class="btn btn-primary">Go somewhere</a>
+                                  </div>
+                                  </div>';
+                              
 
-	</table>
-	
-
-  
+                    }
+                    echo '</div>
+                          </div>';
+             }
+              Database::disconnect();
+ 
+      ?>
  
 </body>
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script> <!--fichier jquery-->

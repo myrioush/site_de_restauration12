@@ -21,23 +21,60 @@
 	<link rel="stylesheet" type="text/css" href="../css/style.css"> <!--le fichier css-->
 </head>
 <body>
-      
-      <?php
+     <?php
+          require "../database.php";
+          echo '<nav><ul class="nav nav-tabs">';
 
-          	
-		     <div class="row" style="padding-top:25px;">
-		                <div class="col-md-4">
-		                    <div class="card">
-		                        <div class="card-body">
-		                            <h4 style="text-align:center;">Mangue</h4>
-		                            <img src="img/mangue.jpg" width="100%" height="200px">
-		                            <p class="card-text"></p>
-		                        </div>
-		                    </div>
-		                </div>
-		                           
-		     </div>
-	?>
+          $db =Database::connect();
+          $statement = $db->query("SELECT * FROM categories");
+          $categories=$statement->fetchAll();
+              foreach ($categories as $category)
+              {
+                if ($category['id']=='1')
+                {
+                  echo '<li class="active"><a class="nav-link" href="#'.$category['id'].'"data-toogle="tab">'.$category['name'].'</a></li>';
+                }
+                else
+                {
+                  echo '<li class="nav-item"><a class="nav-link" href="#'.$category['id'].'"data-toogle="tab">'.$category['name'].'</a></li>';
+                }
+              }
+             echo "</ul></nav>";
+             
+             
+             foreach ($categories as $category)
+             {
+                   if ($category['id']=='1')
+                   {
+                       echo '<div class="active" id="'.$category['id'].'">';
+                   }
+                   else
+                   {
+                       echo '<div class="" id="'.$category['id'].'">';
+                   }
+                 
+                   $statement = $db->prepare('SELECT*FROM items WHERE items.category=4');
+                   $statement->execute(array($category['id']));
+                    while($item = $statement->fetch())
+                    {
+                       echo '  <div class="card" style="width: 18rem;">
+                                  <img style="width:18rem;" src="../image/'.$item['image'].'">
+                                  <div class="card" style="width: 18rem;">
+                                   <h4>'.$item['name'].'</h4>
+                                    <p>'.$item['description'].'</p>
+                                    <div>'.number_format((float)$item['price'], 2, '.', ''). ' cfa'.'</div>
+                                     <a href="#" class="btn btn-primary">Go somewhere</a>
+                                  </div>
+                                  </div>';
+                              
+
+                    }
+                    echo '</div>
+                          </div>';
+             }
+              Database::disconnect();
+ 
+      ?>
 </body>
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script> <!--fichier jquery-->
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>

@@ -13,38 +13,79 @@
 <body>
       <?php
           require "../database.php";
-          echo '<nav><ul class="nav nav-tabs">;'
+          echo '<nav><ul class="nav nav-tabs">';
 
-          $db = Database::connect();
+          $db =Database::connect();
           $statement = $db->query("SELECT * FROM categories");
           $categories=$statement->fetchAll();
-          foreach ($categories as $category)
-         {
-            if ($category['id']=='1')
-            {
-              echo '<li class="active"><a class="nav-link" href="entre.php'.$category['id'].'"data-toogle="tab"'.$category['name']'</a></li>;'
-            }
-            else
-            {
-              echo '<li class="nav-item"><a class="nav-link "href="entre.php".$category['id'].'data-toogle="tab"'.$category['name']>Entrée</a></li>";' 
-            }
-        }
-        echo "</ul></nav>";
- 
-      ?>
-      
-  
-  <li class="nav-item">
-    <a class="nav-link" href="plat.php?id=2">Plat</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="dessert.php?id=3">Déssert</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="boisson.php?id=4">Boissons</a>
-  </li>
-</ul>	
+              foreach ($categories as $category)
+              {
+                if ($category['id']=='1')
+                {
+                  echo '<li class="active"><a class="nav-link" href="#'.$category['id'].'"data-toogle="tab">'.$category['name'].'</a></li>';
+                }
+                else
+                {
+                  echo '<li class="nav-item"><a class="nav-link" href="#'.$category['id'].'"data-toogle="tab">'.$category['name'].'</a></li>';
+                }
+              }
+             echo "</ul></nav>";
+             
+          <?php
+          require "../database.php";
+          echo '<nav><ul class="nav nav-tabs">';
 
+          $db =Database::connect();
+          $statement = $db->query("SELECT * FROM categories");
+          $categories=$statement->fetchAll();
+              foreach ($categories as $category)
+              {
+                if ($category['id']=='1')
+                {
+                  echo '<li class="active"><a class="nav-link" href="#'.$category['id'].'"data-toogle="tab">'.$category['name'].'</a></li>';
+                }
+                else
+                {
+                  echo '<li class="nav-item"><a class="nav-link" href="#'.$category['id'].'"data-toogle="tab">'.$category['name'].'</a></li>';
+                }
+              }
+             echo "</ul></nav>";
+             
+             
+             foreach ($categories as $category)
+             {
+                   if ($category['id']=='1')
+                   {
+                       echo '<div class="active" id="'.$category['id'].'">';
+                   }
+                   else
+                   {
+                       echo '<div class="" id="'.$category['id'].'">';
+                   }
+                 
+                   $statement = $db->prepare('SELECT*FROM items WHERE items.category=?');
+                   $statement->execute(array($category['id']));
+                    while($item = $statement->fetch())
+                    {
+                       echo '  <div class="card" style="width: 18rem;">
+                                  <img style="width:18rem;" src="../image/'.$item['image'].'">
+                                  <div class="card" style="width: 18rem;">
+                                   <h4>'.$item['name'].'</h4>
+                                    <p>'.$item['description'].'</p>
+                                    <div>'.number_format((float)$item['price'], 2, '.', ''). ' cfa'.'</div>
+                                     <a href="#" class="btn btn-primary">Go somewhere</a>
+                                  </div>
+                                  </div>';
+                              
+
+                    }
+                    echo '</div>
+                          </div>';
+             }
+              Database::disconnect();
+ 
+    
+      ?>
 </body>
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script> <!--fichier jquery-->
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
