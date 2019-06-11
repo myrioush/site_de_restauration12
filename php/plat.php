@@ -23,24 +23,9 @@
 	
   <?php
           require "../database.php";
-          echo '<nav><ul class="nav nav-tabs">';
-
           $db =Database::connect();
-          $statement = $db->query("SELECT * FROM categories");
+          $statement = $db->query("SELECT * FROM categories WHERE id=2");
           $categories=$statement->fetchAll();
-              foreach ($categories as $category)
-              {
-                if ($category['id']=='1')
-                {
-                  echo '<li class="active"><a class="nav-link" href="#'.$category['id'].'"data-toogle="tab">'.$category['name'].'</a></li>';
-                }
-                else
-                {
-                  echo '<li class="nav-item"><a class="nav-link" href="#'.$category['id'].'"data-toogle="tab">'.$category['name'].'</a></li>';
-                }
-              }
-             echo "</ul></nav>";
-             
              
              foreach ($categories as $category)
              {
@@ -53,7 +38,7 @@
                        echo '<div class="" id="'.$category['id'].'">';
                    }
                  
-                   $statement = $db->prepare('SELECT*FROM items WHERE items.category=2');
+                   $statement = $db->prepare('SELECT*FROM items WHERE items.category');
                    $statement->execute(array($category['id']));
                     while($item = $statement->fetch())
                     {
@@ -71,6 +56,7 @@
                     }
                     echo '</div>
                           </div>';
+                    echo "       ";
              }
               Database::disconnect();
  

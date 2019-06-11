@@ -12,32 +12,12 @@
 </head>
 <body>
       <?php
-          require "../database.php";
-          echo '<nav><ul class="nav nav-tabs">';
+              require "../database.php";
+              echo '<nav><ul class="nav nav-tabs">';
 
-          $db =Database::connect();
-          $statement = $db->query("SELECT * FROM categories");
-          $categories=$statement->fetchAll();
-              foreach ($categories as $category)
-              {
-                if ($category['id']=='1')
-                {
-                  echo '<li class="active"><a class="nav-link" href="#'.$category['id'].'"data-toogle="tab">'.$category['name'].'</a></li>';
-                }
-                else
-                {
-                  echo '<li class="nav-item"><a class="nav-link" href="#'.$category['id'].'"data-toogle="tab">'.$category['name'].'</a></li>';
-                }
-              }
-             echo "</ul></nav>";
-             
-          <?php
-          require "../database.php";
-          echo '<nav><ul class="nav nav-tabs">';
-
-          $db =Database::connect();
-          $statement = $db->query("SELECT * FROM categories");
-          $categories=$statement->fetchAll();
+              $db =Database::connect();
+              $statement = $db->query("SELECT * FROM categories");
+              $categories=$statement->fetchAll();
               foreach ($categories as $category)
               {
                 if ($category['id']=='1')
@@ -69,13 +49,13 @@
                     {
                        echo '  <div class="card" style="width: 18rem;">
                                   <img style="width:18rem;" src="../image/'.$item['image'].'">
-                                  <div class="card" style="width: 18rem;">
+                                  <div class="card-body" style="width: 18rem;">
                                    <h4>'.$item['name'].'</h4>
                                     <p>'.$item['description'].'</p>
                                     <div>'.number_format((float)$item['price'], 2, '.', ''). ' cfa'.'</div>
                                      <a href="#" class="btn btn-primary">Go somewhere</a>
                                   </div>
-                                  </div>';
+                                </div>';
                               
 
                     }

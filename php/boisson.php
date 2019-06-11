@@ -1,5 +1,4 @@
 <?php
-  include"menu.php";
   require '../database.php';
 
    function checkInput($data) 
@@ -22,11 +21,10 @@
 </head>
 <body>
      <?php
-          require "../database.php";
           echo '<nav><ul class="nav nav-tabs">';
 
           $db =Database::connect();
-          $statement = $db->query("SELECT * FROM categories");
+          $statement = $db->query("SELECT * FROM categories WHERE id=4");
           $categories=$statement->fetchAll();
               foreach ($categories as $category)
               {
@@ -53,7 +51,7 @@
                        echo '<div class="" id="'.$category['id'].'">';
                    }
                  
-                   $statement = $db->prepare('SELECT*FROM items WHERE items.category=4');
+                   $statement = $db->prepare('SELECT*FROM items WHERE items.category');
                    $statement->execute(array($category['id']));
                     while($item = $statement->fetch())
                     {

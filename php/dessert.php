@@ -32,7 +32,7 @@
           $categories=$statement->fetchAll();
               foreach ($categories as $category)
               {
-                if ($category['id']=='1')
+                if ($category['id']=='3')
                 {
                   echo '<li class="active"><a class="nav-link" href="#'.$category['id'].'"data-toogle="tab">'.$category['name'].'</a></li>';
                 }
@@ -55,7 +55,7 @@
                        echo '<div class="" id="'.$category['id'].'">';
                    }
                  
-                   $statement = $db->prepare('SELECT*FROM items WHERE items.category=3');
+                   $statement = $db->prepare('SELECT*FROM items WHERE items.category');
                    $statement->execute(array($category['id']));
                     while($item = $statement->fetch())
                     {
