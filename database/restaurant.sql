@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 08 juin 2019 à 18:02
--- Version du serveur :  5.7.24
--- Version de PHP :  7.2.14
+-- Généré le :  jeu. 13 juin 2019 à 17:38
+-- Version du serveur :  5.7.26
+-- Version de PHP :  7.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,24 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `restaurant`
 --
+
+DELIMITER $$
+--
+-- Procédures
+--
+DROP PROCEDURE IF EXISTS `getAllCat`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllCat` ()  NO SQL
+BEGIN
+    select * from categories;
+END$$
+
+DROP PROCEDURE IF EXISTS `getItemByCat`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getItemByCat` (IN `cat_id` INT)  NO SQL
+BEGIN
+    select * from items where category=cat_id;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 

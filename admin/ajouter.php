@@ -95,7 +95,7 @@
      <meta name="viewport" content="width=device-width, initial-scale=1">
       <script src="../js/jquery.min.js"></script>
         <link rel="../css/bootstrap.min.css">
-        <script src="../js/bootstrap.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
      <link rel="stylesheet" href="../css/styles.css">
 </head>
  <body>
