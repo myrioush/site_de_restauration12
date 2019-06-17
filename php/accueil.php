@@ -1,18 +1,12 @@
-<?php
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<title>resto</title>
 	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="../css/mdb.min.css" rel="stylesheet">
-    <!-- Your custom styles (optional) -->
     <link href="../css/style.css" rel="stylesheet">
 	
 </head>
@@ -27,10 +21,13 @@
     <a class="nav-link" href="menu.php">menu</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
+    <a class="nav-link" href="reservation.php">réservation</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+    <a class="nav-link" href="évènement.php">èvénement</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="contacter.php">contatez-moi</a>
   </li>
 </ul>
 

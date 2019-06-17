@@ -54,7 +54,7 @@
                         <label>Catégorie:</label><?php echo '  '.$item['category'];?>
                       </div>
                       <div class="form-group">
-                        <label>Image:</label><?php echo '  '.$item['image'];?>
+                        <label>Image:</label><?php echo '<img style="width:18rem;" src="../image/'.$item['image'].'"> ';?>
                       </div>
                     </form>
                     <br>

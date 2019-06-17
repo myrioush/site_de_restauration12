@@ -14,7 +14,7 @@
 	<h1 class="text-logo"><span class="glyphicon glyphicon-cutlery"></span> resto <span class="glyphicon glyphicon-cutlery"></span></h1>
         <div class="container admin">
             <div class="row">
-                <h1><strong>Liste du menu  </strong><a href="ajouter.php" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-plus"></span> Ajouter</a></h1>
+                <h1><strong>Liste du menu  </strong><a href="ajouter.php" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-plus"></span> Ajouter</a></h1> <a href="reservation_liste.php">liste des réservation</a>
                 <table class="row">
                   <thead class="card">
                     <tr>
@@ -30,7 +30,7 @@
                       <?php
                         require '../database.php';
                         $db = Database::connect();
-                        $statement = $db->query('SELECT items.id, items.name, items.description, items.price, categories.name AS category FROM items LEFT JOIN categories ON items.category = categories.id ORDER BY items.id DESC');
+                        $statement = $db->query('SELECT items.id, items.name, items.description, items.price, categories.name AS category FROM items LEFT JOIN categories ON items.category = categories.id ORDER BY items.id ASC');
                         while($item = $statement->fetch())
                         {
                             echo '<tr>';
