@@ -1,9 +1,19 @@
 <?php
- require "../database.php";
+ require_once "../Models/database.php";
+ require_once "../Models/Client.php";
+ require_once "../Models/Reservation.php";
+ session_start();
      
     
     if (isset($_POST)) {        
         try {
+            if(isset($_SESSION['client'])){
+                $aux = $_SESSION['client'];
+                $_POST['nom_reser'] = $aux->nom_cl;
+                $_POST['prenom_reser'] = $aux->prenom_cl;
+                $_POST['email'] = $aux->email_cl;
+                $_POST['numero'] = $aux->num_cl;
+            }
             extract($_POST);
             
 
@@ -16,17 +26,14 @@
             }
 
             else {
-
-                $db = Database::connect();
-                $statement = $db->prepare('INSERT INTO reservation(nom_reser,prenom_reser,nombre_p,email,numero,date_reser,heure_reser) VALUES (?,?,?,?,?,?,?)');
-                $item = $statement->execute(array($nom_reser, $prenom_reser,$nombre_p, $email, $numero,$date_reser,$heure_reser));
-
-                if (!$item) {
-                    $message = "Utilisateur bien enregistre";
-                } else {
-                    $message = "Ressaie mon petit ! ";
+                $tables = Reservation::getTable($date_reser);
+                var_dump($tables);
+                if (sizeof($tables) == 50){
+                    $message = "Toutes les tables sont prises";
+                } else{
+                    Reservation::insert($_POST);
+                    $message = "commande validé";
                 }
-                
             }
 
             
@@ -54,24 +61,26 @@
 </head>
 <body>
     <form method="post" >
-        <label>nom</label>
-        <input type="text" name="nom_reser" id="nom_reser" required="">
-        <label>prénom</label>
-        <input type="text" name="prenom_reser" id="prenom_reser" required="">
+        <?php
+            if(!isset($_SESSION['client'])) {
+                ?>
+                <label>nom</label>
+                <input type="text" name="nom_reser" id="nom_reser" required="">
+                <label>prénom</label>
+                <input type="text" name="prenom_reser" id="prenom_reser" required="">
+                <label>email</label>
+                <input type="email" name="email" id="email" required="">
+                <label>numero</label>
+                <input type="tel" name="numero" id="numero" required="">
+                <?php
+            }
+        ?>
         <label>nombre de personnes</label>
         <input type="text" name="nombre_p" id="nombre_p" required="">
-        <label>email</label>
-        <input type="email" name="email" id="email" required="">
-        <label>numero</label>
-        <input type="tel" name="numero" id="numero" required="">
-        
         <label>date reservation</label>
         <input type="date" name="date_reser" required="">
         <label>heure reservation</label>
         <input type="time" name="heure_reser" required="">
-        <?php
-        $num_reser=random(1,50);
-        ?>
         <input type="submit" value="connexion">
     </form>
  <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>

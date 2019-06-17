@@ -1,6 +1,6 @@
 <?php
-    require"../database.php";
-    include 'fonctions_panier2.php';
+    require "../Models/database.php";
+    require_once 'fonctions_panier2.php';
 
     session_start();
     set_time_limit(0);

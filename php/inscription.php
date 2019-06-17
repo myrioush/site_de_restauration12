@@ -1,6 +1,6 @@
 <?php
 session_start();
-  require"../database.php";
+  require "../database.php";
 
   extract($_POST);
   if (isset($_POST['submit'])) 

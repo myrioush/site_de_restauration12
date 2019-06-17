@@ -1,6 +1,7 @@
 <?php
 
-    require"../database.php";
+    require_once "../Models/database.php";
+    require_once "../Models/Client.php";
     session_start();
     extract($_POST);
      function checkInput($data) 
@@ -9,27 +10,19 @@
       $data = stripslashes($data);
       $data = htmlspecialchars($data);
       return $data;
-    }
-
-        
-       try {
-      extract($_POST);
-      $db = Database::connect();
-     
+    }try {
+       extract($_POST);
       if (empty($_POST)) {
         $message = "Veuillez remplir tous les champs svp !";
-      } 
-      else {
-        
-        $statement = $db->prepare('SELECT * FROM client WHERE nom_cl = ? AND mdp_cl = ?');
-        $statement->execute(array($username, $password));
-        
-        
-          header('Location:menu.php ');
-        
       }
+      else {
 
-      
+        $_SESSION["client"] = New Client($username,$password);
+
+
+          header('Location:menu.php ');
+
+      }
     } catch (PDOException $e) {
       echo $e->getMessage(); die;
     }
@@ -53,10 +46,10 @@
 <body>
 
 	<form method="post" action="">
-		<label>PSEUDO</label>
-		<input type="text" name="username" required="">
-		<label>mot de passe</label>
-		<input type="password" name="password" required="">
+		<label for="username">PSEUDO</label>
+		<input id="username" type="text" name="username" required="">
+		<label for="password">mot de passe</label>
+		<input id="password" type="password" name="password" required="">
 		<input type="submit" name="submit">
 
 		

@@ -1,6 +1,6 @@
 <?php
  session_start();
- require"../database.php";
+ require "../database.php";
  include 'fonctions_panier2.php';
  
 ?> 
